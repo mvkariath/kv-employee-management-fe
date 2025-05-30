@@ -37,13 +37,13 @@ body {
 }
 .status-badge {
   text-align: center;
-  padding: 5px;
+  padding: 1px;
 
   width: 110px;
   background-origin: padding-box;
 
   border-radius: 20px;
-  font-weight: bolder;
+  font-weight: normal;
 }
 .table-cell {
   width: 13%;

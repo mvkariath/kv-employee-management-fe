@@ -1,16 +1,21 @@
-import CreateEmployee from "./pages/employee-form/EmployeeForm";
+// import CreateEmployee from "./pages/employee-form/EmployeeForm";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import Login from "./pages/login/Login";
+import { lazy, Suspense } from "react";
+const Login = lazy(() => import("./pages/login/Login"));
 import NotFound from "./pages/not-found/NotFound";
+import { LoadingPage } from "./pages/loading-page/Loading";
 import Layout from "./components/layout/Layout";
-import EmployeeList from "./pages/employee-list/EmployeeList";
-import EmployeeDetails from "./pages/employee-details/EmployeeDetails";
-import { EmployeeTable } from "./pages/employee-list/components/EmployeeTable";
-import EmployeeForm from "./pages/employee-form/EmployeeForm";
+const EmployeeList = lazy(() => import("./pages/employee-list/EmployeeList"));
+const EmployeeDetails = lazy(
+  () => import("./pages/employee-details/EmployeeDetails")
+);
+const EmployeeForm = lazy(() => import("./pages/employee-form/EmployeeForm"));
+// import { EmployeeTable } from "./pages/employee-list/components/EmployeeTable";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -20,7 +25,11 @@ function App() {
     },
     {
       path: "/login",
-      element: <Login />,
+      element: (
+        <Suspense fallback={<LoadingPage />}>
+          <Login />
+        </Suspense>
+      ),
       errorElement: <NotFound />,
     },
     {
@@ -29,22 +38,38 @@ function App() {
       children: [
         {
           index: true,
-          element: <EmployeeList />,
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <EmployeeList />
+            </Suspense>
+          ),
         },
         {
           path: "create",
-          element: <EmployeeForm context="create" />,
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <EmployeeForm context="create" />
+            </Suspense>
+          ),
         },
         {
           path: "edit/:id",
-          element: <EmployeeForm context="edit" />,
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <EmployeeForm context="edit" />
+            </Suspense>
+          ),
         },
         {
           path: ":id",
           element: <EmployeeDetails />,
         },
       ],
-      errorElement: <NotFound />,
+      errorElement: (
+        <Suspense fallback={<LoadingPage />}>
+          <NotFound />
+        </Suspense>
+      ),
     },
     {
       path: "*",
