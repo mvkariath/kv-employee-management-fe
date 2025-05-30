@@ -1,0 +1,43 @@
+#floating-input {
+  display: flex;
+  margin-bottom: 15px;
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+input {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+.input-error {
+  color: red;
+  text-align: center;
+}
+#floating-input input::placeholder {
+  opacity: 0;
+}
+
+.float-input-box span {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  transform: translateY(10px);
+  font-size: 0.825em;
+  transition-duration: 300ms;
+  background: white;
+  color: #1eb4f0;
+}
+label:focus-within > span,
+input:not(:placeholder-shown) + span {
+  transform: translateY(-10px);
+}
+
+.clear-button {
+  background: #3635351e;
+  padding: 5px;
+  border-radius: 5px;
+  border: 0.5px gray;
+}

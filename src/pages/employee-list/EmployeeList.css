@@ -1,0 +1,120 @@
+body {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+}
+.employee-list-top-action-button {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+.employee-list-top-action-button select {
+  display: flex;
+  flex-direction: row;
+  height: 35px;
+}
+.table-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 5px 5px 5px rgba(56, 58, 58, 0.151);
+  background: #ffffff;
+}
+.header-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 15px;
+  font-weight: bold;
+  background: #eaf9ff;
+}
+.table-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.status-badge {
+  text-align: center;
+  padding: 5px;
+
+  width: 110px;
+  background-origin: padding-box;
+
+  border-radius: 20px;
+  font-weight: bolder;
+}
+.filter-by-select {
+  flex-direction: row;
+  width: fit-content;
+  align-items: center;
+}
+.filter-by-select label {
+  width: 100%;
+}
+.table-cell {
+  width: 13%;
+}
+.action-button-group {
+  display: flex;
+  gap: 20px;
+}
+.action-button-group button {
+  border: none;
+  background: transparent;
+}
+.create-employee-button {
+  display: flex;
+}
+.create-employee-button {
+  display: flex;
+  background: #eaf9ff;
+  border-radius: 20px;
+  border: none;
+  height: fit-content;
+  align-items: center;
+  gap: 10px;
+  padding-right: 10px;
+  color: rgb(36, 35, 35);
+}
+.plus-icon {
+  background: #03aeee;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 100%;
+  color: white;
+  text-align: center;
+  justify-content: center;
+}
+
+.delete-user-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.delete-user-modal p {
+  color: red;
+  text-align: center;
+}
+.delete-user-modal .button-group {
+  justify-content: space-between;
+  display: flex;
+  flex: 1;
+}
+.delete-user-modal .button-group button {
+  width: 100%;
+  padding: 5px;
+  border-radius: 10px;
+  background: transparent;
+}
+#cancel-button {
+  border: 0.5px solid red;
+}
+
+#delete-button {
+  background: red;
+  color: white;
+  border: none;
+}

@@ -1,0 +1,269 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #ffffff;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow: hidden;
+}
+
+.content {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left side with pattern */
+.pattern-side {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pattern {
+  position: absolute;
+  top: 3%;
+  left: 3%;
+  width: 96%;
+  height: 94%;
+  background-color: #03aeee;
+  opacity: 0.1;
+}
+
+/* Circular elements */
+.circle-large {
+  position: absolute;
+  width: min(70vh, 70%);
+  aspect-ratio: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle-inner {
+  position: relative;
+  width: 89%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.login-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Right side with login form */
+.login-side {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5%;
+}
+
+.login-content {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  width: 45%;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 8%;
+}
+
+/* Form inputs */
+.form-input {
+  position: relative;
+  margin-bottom: 8%;
+  display: flex;
+}
+
+.form-input input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #b4b7bd;
+  border-radius: 0;
+  padding: 14.5px 16.79px;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.364;
+  background: none;
+}
+
+.form-input input:focus {
+  border-color: #1eb4f0;
+  outline: none;
+}
+
+.form-input label {
+  position: absolute;
+  left: 16.79px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 5px;
+  background-color: transparent;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.364;
+  transition: all 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+/* Using the placeholder-shown pseudo-class for label positioning */
+.form-input input:not(:placeholder-shown) + label {
+  top: -10px;
+  transform: translateY(0);
+  font-size: 14px;
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.form-input input:focus + label {
+  top: -10px;
+  transform: translateY(0);
+  font-size: 14px;
+  color: #1eb4f0;
+  background-color: #ffffff;
+}
+
+/* Hide the placeholder visually */
+.form-input input::placeholder {
+  color: transparent;
+}
+
+/* Login button */
+.login-button {
+  width: 100%;
+  height: 50px;
+  background-color: #03aeee;
+  border: none;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0px 3px 6px rgba(176, 230, 250, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.364;
+}
+
+button:disabled {
+  background-color: #0096e0;
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: #0096e0;
+}
+.login-button:hover {
+  background-color: #0296ce;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 1200px) {
+  .login-side {
+    padding: 0 3%;
+  }
+
+  .logo {
+    width: 60%;
+    margin-bottom: 10%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .pattern-side,
+  .login-side {
+    width: 100%;
+    height: 50%;
+  }
+
+  .pattern {
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+  }
+
+  .circle-large {
+    width: min(35vh, 70%);
+  }
+
+  .logo {
+    width: 70%;
+    margin-bottom: 6%;
+  }
+
+  .login-content {
+    max-width: 400px;
+  }
+}
+
+.show-password-div {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 1em 0;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  margin: 0;
+  box-shadow: none;
+}
+
+input[type="checkbox"]:focus {
+  outline: 2px solid #0096e0;
+  outline-offset: 2px;
+}
+
+.validation-container {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  min-height: 1.5em;
+  margin: 0.5em 0;
+}
+
+.error-message {
+  color: #ff4d4f;
+  font-size: 0.9em;
+  margin: 0;
+}

@@ -1,0 +1,24 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 50%;
+  margin: auto;
+  margin-top: auto;
+}
+
+.login-logo {
+  height: 40px;
+  width: 150px;
+}
+
+.checkbox {
+  display: flex;
+  text-wrap-mode: nowrap;
+  border-radius: 5px;
+  padding: 10px;
+  height: fit-content;
+  width: fit-content;
+  gap: 5px;
+  font-size: small;
+}

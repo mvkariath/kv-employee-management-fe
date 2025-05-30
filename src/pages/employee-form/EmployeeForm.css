@@ -1,0 +1,57 @@
+.create-employee-page {
+  display: flex;
+  flex-direction: row;
+}
+
+.main-content-container {
+  display: flex;
+  flex-direction: column;
+  width: 84%;
+  background: var(--grey);
+}
+
+.employee-form-container {
+  display: flex;
+
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+}
+
+.employee-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+}
+.employee-form-input-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.create-button {
+  width: 150px;
+  background-color: #03aeee;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  height: fit-content;
+}
+.cancel-button {
+  width: 150px;
+  background-color: white;
+  border: 1px solid rgba(78, 74, 74, 0.363);
+  padding: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  height: fit-content;
+}

@@ -1,0 +1,9 @@
+.login-button{
+   
+    background-color:#03AEEE;
+    border:none;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    height: fit-content;
+}
