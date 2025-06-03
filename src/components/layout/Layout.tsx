@@ -6,7 +6,7 @@ import { useEffect } from "react";
 const Layout = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("isLoggedIn") === "false") {
+    if (!localStorage.getItem("token")) {
       navigate("/");
     }
   }, []);

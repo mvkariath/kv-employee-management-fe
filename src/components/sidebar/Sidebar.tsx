@@ -10,7 +10,7 @@ const Sidebar = () => {
   const location = useLocation();
 
   function handleLogout() {
-    localStorage.setItem("isLoggedIn", "false");
+    localStorage.removeItem("token");
     navigate("/");
   }
 

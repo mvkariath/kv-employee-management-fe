@@ -4,7 +4,10 @@ import Input from "../floating-input/FloatingInput";
 
 import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../api-services/auth/login.api";
+import type { LoginPayload } from "../../api-services/auth/types";
 const LoginForm = () => {
+  const [login, { isLoading }] = useLoginMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
@@ -14,7 +17,7 @@ const LoginForm = () => {
 
   const userNameCheck = (username: string) => {
     return {
-      isInvalid: username.length > 10,
+      isInvalid: username.length > 20,
       limit: 10,
     };
   };
@@ -33,22 +36,21 @@ const LoginForm = () => {
     localStorage.setItem("showPass", String(showPass));
   }, [showPass]);
 
-  function loginUser() {
-    {
-      /*Implement the api logics logic here */
-    }
-    if (username == password) {
-      if (credentialsError) setCredentialsError(false);
-      localStorage.setItem("isLoggedIn", "true");
-      navigate("/employee");
-    } else {
-      setCredentialsError(true);
-    }
+  async function loginUser() {
+    login({ email: username, password: password })
+      .unwrap()
+      .then((response) => {
+        localStorage.setItem("token", response.accessToken);
+        navigate("/employee");
+      })
+      .catch((error) => {
+        setCredentialsError(error.message);
+      });
   }
 
   return (
     <form className="login-form">
-      <img src="/assets/kv-logo.png" height={45} width={208} />
+      <img src="/assets/kv-logo.png" height={45} width={208} />1
       <Input
         ref={usernameRef}
         placeholder="Email Id "
@@ -90,7 +92,6 @@ const LoginForm = () => {
           </button>
         }
       />
-
       <div className="checkbox">
         <input
           type="checkbox"
@@ -103,11 +104,10 @@ const LoginForm = () => {
       {}
       <Button
         className="login-button"
-        text="Login"
-        disabled={false}
+        text={isLoading ? "loading" : "Login"}
+        disabled={isLoading}
         onClick={loginUser}
       />
-
       {credentialsError && (
         <p className="input-error">Invalid Credentials !!</p>
       )}

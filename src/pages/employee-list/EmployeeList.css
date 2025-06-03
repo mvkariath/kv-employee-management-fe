@@ -53,6 +53,16 @@ body {
 .filter-by-select label {
   width: 100%;
 }
+.filter-by-select select {
+  border: none;
+  background: #eaf9ff;
+  border-radius: 20px;
+}
+.filter-by-select option {
+  border: none;
+  background: white;
+  border-radius: 20px;
+}
 .table-cell {
   width: 13%;
 }

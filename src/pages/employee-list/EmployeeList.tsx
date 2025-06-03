@@ -1,46 +1,17 @@
-import { useEffect, useState } from "react";
 import Button from "../../components/button/Button";
 import Select from "../../components/select/Select";
 import { TitleHeader } from "../../components/title-header/TitleHeader";
 import "./EmployeeList.css";
 import { EmployeeTable } from "./components/EmployeeTable";
-import type { UserDetails } from "../../types/employee.type";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import type { Employee, Status } from "../../store/employee/employee.types";
+import { useGetEmployeesQuery } from "../../api-services/employees/employee.api";
+import { useGetDepartmentsQuery } from "../../api-services/department/department.api";
 
 export type selectBoxOption = {
-  value: string;
+  value: string | number;
   label: string;
 };
-
-const dummyUsers: UserDetails[] = [
-  {
-    employee_name: "mathew",
-    employee_id: "EMP123",
-    joining_date: "2025-05-23T05:22:11.080Z",
-    role: "HR",
-    status: "ACTIVE",
-    experience: "10",
-    email: "test",
-  },
-  {
-    employee_name: "mathew1",
-    employee_id: "EMP123",
-    joining_date: "2025-05-23T05:22:11.080Z",
-    role: "HR",
-    status: "INACTIVE",
-    experience: "10",
-    email: "test",
-  },
-  {
-    employee_name: "newww",
-    employee_id: "EMP123",
-    joining_date: "2025-05-23T05:22:11.080Z",
-    role: "HR",
-    status: "PROBATION",
-    experience: "10",
-    email: "test",
-  },
-];
 
 const EmployeeList = () => {
   const statusOptions: selectBoxOption[] = [
@@ -52,15 +23,15 @@ const EmployeeList = () => {
     { value: "inactive", label: "Inactive" },
     { value: "probation", label: "Probation" },
   ];
-  const [employeeList, setEmployeeList] = useState<UserDetails[]>([]);
-  const [isLoading, setisLoading] = useState(false);
+
+  const { data: employeeList, error, isLoading } = useGetEmployeesQuery();
+
+  console.log("employeeList");
 
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  function handleFilterChange(
-    value: "active" | "inactive" | "probation" | "all"
-  ) {
+  function handleFilterChange(value: Status | "all") {
     if (value === "all") {
       setSearchParams(new URLSearchParams());
       return;
@@ -68,26 +39,27 @@ const EmployeeList = () => {
     setSearchParams(new URLSearchParams(`?status=${value}`));
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setisLoading(true);
-      setEmployeeList(dummyUsers);
-    }, 1);
-  }, []);
-
   const status = searchParams.get("status");
   console.log(status);
-  const filteredEmployees = status
-    ? employeeList.filter(
-        (employee) => employee.status.toLowerCase() === status
-      )
-    : employeeList;
 
   const handleEditClicked = () => {
     navigate("/create");
   };
-  if (isLoading && !employeeList.length)
-    return <>there are no employee to display</>;
+  if (error) {
+    return <p>An error has occured</p>;
+  }
+  if (isLoading) {
+    return <p>Still Loading the data</p>;
+  }
+  if (!employeeList) {
+    return <p>There is no data to be displayed</p>;
+  }
+  const filteredEmployees = status
+    ? employeeList?.filter(
+        (employee: Employee) => employee.status.toLowerCase() === status
+      )
+    : employeeList;
+
   return (
     <>
       <TitleHeader
@@ -96,6 +68,7 @@ const EmployeeList = () => {
           <div className="employee-list-top-action-button">
             <Select
               value={status || "all"}
+              //@ts-ignore
               onChange={handleFilterChange}
               label="Filter By"
               selectOptions={statusOptions}

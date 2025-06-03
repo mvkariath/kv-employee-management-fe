@@ -4,29 +4,173 @@ import Input from "../../components/input/Input";
 import Select from "../../components/select/Select";
 import AddressForm from "./components/address-form/AddressForm";
 import { TitleHeader } from "../../components/title-header/TitleHeader";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import {
+  EmployeeRole,
+  EmployeeStatus,
+  type Employee,
+  type Role,
+  type Status,
+} from "../../store/employee/employee.types";
+import {
+  useCreateEmployeeMutation,
+  useUpdateEmployeeMutation,
+  useGetSingleEmployeeQuery,
+} from "../../api-services/employees/employee.api";
+import type { Department } from "../../api-services/department/types";
+import { useGetDepartmentsQuery } from "../../api-services/department/department.api";
+import { useLocation } from "react-router-dom";
 interface EmployeeFormProps {
   context: "create" | "edit";
+  // departmentOptions: { value: string; label: number }[];
 }
 export type selectBoxOption = {
-  value: string;
+  value: string | number;
   label: string;
 };
-const departmentOptions: selectBoxOption[] = [
-  { value: "UI", label: "UI" },
-  { value: "UX", label: "UX" },
-  { value: "DEV", label: "Developer" },
+// const departmentOptions: selectBoxOption[] = [
+//   { value: "UI", label: "UI" },
+//   { value: "UX", label: "UX" },
+//   { value: "DEV", label: "Developer" },
 
-  { value: "HR", label: "HR" },
-];
+//   { value: "HR", label: "HR" },
+// ];
 const statusOptions: selectBoxOption[] = [
-  { value: "active", label: "Active" },
-  { value: "inactive", label: "Inactive" },
-  { value: "probation", label: "Probation" },
+  { value: "ACTIVE", label: "Active" },
+  { value: "INACTIVE", label: "Inactive" },
+  { value: "PROBATION", label: "Probation" },
 ];
+
+export type UserForm = {
+  name: string;
+  employeeId: string;
+  dateOfJoining: string;
+  role: Role;
+  status: Status;
+  email: string;
+  experience: number;
+  age: number;
+  departmentId: number;
+  password: string;
+  address_line1: string;
+  address_line2: string;
+  address_pincode: number;
+  address_houseNo: number;
+};
 
 const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
-  const { id } = useParams();
+  // const dispatch = useAppDispatch
+  const location = useLocation();
+
+  const [addEmployee] = useCreateEmployeeMutation();
+  const [editEmployee] = useUpdateEmployeeMutation();
+  const { data: departmentList, error, isLoading } = useGetDepartmentsQuery();
+  const { data: employee } = useGetSingleEmployeeQuery(
+    location.pathname.split("/").slice(-1)[0],
+    {
+      skip: context === "create" ? true : false,
+    }
+  );
+  const user_id = location.pathname.split("/").slice(-1)[0];
+  console.log("this is the employee", user_id);
+  const departmentOptions = departmentList?.map((department: Department) => {
+    return {
+      label: department.name,
+      value: department.id,
+    };
+  });
+
+  const [userForm, setUserForm] = useState<UserForm>({
+    name: "",
+    employeeId: "",
+    dateOfJoining: "",
+    role: EmployeeRole.HR,
+    status: EmployeeStatus.ACTIVE,
+    email: "",
+    experience: 0,
+    age: 0,
+    departmentId: 1,
+    password: "",
+    address_line1: "",
+    address_line2: "",
+    address_pincode: 0,
+    address_houseNo: 0,
+  });
+  function handleChange(field: string, value: string | number) {
+    console.log("we are changing");
+    console.log(field);
+    console.log(value);
+    setUserForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  }
+  function handleSubmit() {
+    const samplePayload: Employee = {
+      name: userForm.name,
+      employeeId: userForm.employeeId,
+      dateOfJoining: userForm.dateOfJoining,
+      role: userForm.role,
+      status: userForm.status,
+      email: userForm.email,
+      experience: userForm.experience,
+      age: userForm.age,
+      department_id: parseInt(userForm.departmentId),
+      password: userForm.password,
+      address: {
+        houseNo: userForm.address_houseNo,
+        line1: userForm.address_line1,
+        line2: userForm.address_line2,
+        pincode: userForm.address_pincode,
+      },
+    };
+    if (context === "create") {
+      addEmployee(samplePayload);
+    } else if (context === "edit") {
+      editEmployee({ user_id: employee?.id || "-1", employee: samplePayload });
+    }
+    console.log("this is hte payload", samplePayload);
+  }
+  useEffect(() => {
+    if (context == "edit") {
+      console.log("from te=he useEffect:", employee);
+      setUserForm({
+        name: employee?.name || "",
+        employeeId: employee?.employeeId || "100",
+        dateOfJoining: employee?.dateOfJoining || "",
+        role: employee?.role || EmployeeRole.HR,
+        status: employee?.status || EmployeeStatus.PROBATION,
+        email: employee?.email || "",
+        experience: employee?.experience || 0,
+        age: employee?.age || 0,
+        departmentId: employee?.department.id || 1,
+        password: "",
+        address_line1: employee?.address.line1 || "",
+        address_line2: employee?.address.line2 || "",
+        address_pincode: employee?.address.pincode || -1,
+        address_houseNo: employee?.address.houseNo || -1,
+      });
+    } else {
+      setUserForm({
+        name: "",
+        employeeId: "",
+        dateOfJoining: "",
+        role: EmployeeRole.HR,
+        status: EmployeeStatus.ACTIVE,
+        email: "",
+        experience: 0,
+        age: 0,
+        departmentId: 1,
+        password: "",
+        address_line1: "",
+        address_line2: "",
+        address_pincode: 0,
+        address_houseNo: 0,
+      });
+    }
+  }, [employee, location]);
+
   return (
     <>
       <section className="form-header">
@@ -37,29 +181,87 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
       <section>
         <form className="employee-form">
           <div className="employee-form-input-container">
-            <Input placeholder="Employee Name" type="text" />
-
+            <Input
+              placeholder="Employee Name"
+              type="text"
+              value={userForm.name}
+              handleChange={(event) => {
+                handleChange("name", event.target.value);
+              }}
+            />
             <Input
               placeholder="Employee ID"
               type="text"
               isDisabled={context === "edit"}
+              value={userForm.employeeId}
+              handleChange={(event) => {
+                handleChange("employeeId", event.target.value);
+              }}
             />
-
-            <Input placeholder="Joining Date" type="date" />
-
-            <Select label="Department" selectOptions={departmentOptions} />
-
-            <Select label="Status" selectOptions={statusOptions} />
-
-            <Input placeholder="Experience(yrs)" type="number" />
-
-            <AddressForm />
+            <Input
+              placeholder="Joining Date"
+              type="date"
+              value={userForm.dateOfJoining.slice(0, 10)}
+              handleChange={(event) => {
+                handleChange("dateOfJoining", event.target.value);
+              }}
+            />
+            <Input
+              placeholder="Email"
+              type="email"
+              value={userForm.email}
+              handleChange={(event) => {
+                handleChange("email", event.target.value);
+              }}
+            />
+            <Input
+              placeholder="Age"
+              type="number"
+              value={userForm.age}
+              handleChange={(event) => {
+                handleChange("age", parseInt(event.target.value));
+              }}
+            />
+            {context !== "edit" && (
+              <Input
+                placeholder="Password"
+                type="text"
+                value={userForm.password}
+                handleChange={(event) => {
+                  handleChange("password", event.target.value);
+                }}
+              />
+            )}
+            <Select
+              label="Department"
+              selectOptions={departmentOptions || [{ label: "HR", value: 1 }]} // this is afall back that is added in case there are no options
+              value={userForm.departmentId}
+              onChange={handleChange}
+            />
+            <Select
+              label="Status"
+              selectOptions={statusOptions}
+              value={userForm.status}
+              onChange={handleChange}
+            />
+            <Input
+              placeholder="Experience(yrs)"
+              type="number"
+              value={userForm.experience}
+              handleChange={(event) => {
+                handleChange("experience", parseInt(event.target.value));
+              }}
+            />
+            <AddressForm userForm={userForm} setUserForm={setUserForm} />
           </div>
           <div className="button-group">
-            <Button
+            <button
               className="create-button"
-              text={context === "edit" ? "Save" : "Create"}
-            />
+              onClick={handleSubmit}
+              type="button"
+            >
+              {context === "edit" ? "Save" : "Create"}
+            </button>
 
             <Button className="cancel-button" text="Cancel" />
           </div>

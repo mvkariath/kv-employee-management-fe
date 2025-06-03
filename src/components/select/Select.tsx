@@ -1,4 +1,5 @@
 import type { selectBoxOption } from "../../pages/employee-list/EmployeeList";
+import type { Role, Status } from "../../store/employee/employee.types";
 import "./Select.css";
 
 const Select = ({
@@ -6,13 +7,13 @@ const Select = ({
   selectOptions,
   className = "",
   value,
-  onChange = (value) => console.log("hello"),
+  onChange = (label, value) => console.log("this is the depat", label, value),
 }: {
   label: string;
   selectOptions: selectBoxOption[];
   className?: string;
-  value?: string;
-  onChange?: (value: "active" | "inactive" | "probation" | "all") => void;
+  value?: string | number;
+  onChange?: (field: string, value: string | number) => void;
 }) => {
   return (
     <div className={`select-component ${className}`}>
@@ -21,7 +22,8 @@ const Select = ({
         value={value}
         onChange={(event) =>
           onChange(
-            event.target.value as "active" | "inactive" | "probation" | "all"
+            label === "Department" ? "departmentId" : "status",
+            event.target.value
           )
         }
       >

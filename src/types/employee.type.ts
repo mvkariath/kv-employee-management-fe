@@ -6,5 +6,8 @@ type UserDetails = {
   status: string;
   email: string;
   experience: string;
+  age: number;
+  password: string;
+  department: string;
 };
 export type { UserDetails };

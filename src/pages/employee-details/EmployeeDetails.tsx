@@ -5,36 +5,32 @@ import { TitleHeader } from "../../components/title-header/TitleHeader";
 import "./EmployeeList.css";
 import { EmployeeCard } from "./components/EmployeeCard";
 import type { UserDetails } from "../../types/employee.type";
+import { useGetSingleEmployeeQuery } from "../../api-services/employees/employee.api";
 
 export type selectBoxOption = {
   value: string;
   label: string;
 };
 
-const dummyUser: UserDetails = {
-  employee_name: "mathew",
-  employee_id: "EMP123",
-  joining_date: "2025-05-23T05:22:11.080Z",
-  role: "HR",
-  status: "ACTIVE",
-  experience: "10",
-  email: "mvkaraith",
-};
 const EmployeeDetails = () => {
   const statusOptions: selectBoxOption[] = [
     { value: "active", label: "Active" },
     { value: "inactive", label: "Inactive" },
     { value: "probation", label: "Probation" },
   ];
-  const [employee, setEmployee] = useState<UserDetails>();
-  const [isLoading, setisLoading] = useState(false);
+  //const [employee, setEmployee] = useState<UserDetails>();
+  const { data: employee } = useGetSingleEmployeeQuery(
+    location.pathname.split("/").slice(-1)[0]
+  );
+  console.log(employee);
+  // const [isLoading, setisLoading] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setisLoading(true);
-      setEmployee(dummyUser);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setisLoading(true);
+  //     setEmployee(dummyUser);
+  //   }, 2000);
+  // }, []);
   if (!employee) return <>there are no employee to display</>;
   return (
     <>
