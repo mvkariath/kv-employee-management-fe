@@ -25,7 +25,7 @@ const AddressForm = ({
         value={userForm.address_houseNo}
         isLabelled={false}
         handleChange={(event) => {
-          handleChange("address_houseNo", event.target.value);
+          handleChange("address_houseNo", parseInt(event.target.value));
         }}
       />
       <Input
@@ -52,7 +52,7 @@ const AddressForm = ({
         value={userForm.address_pincode}
         isLabelled={false}
         handleChange={(event) => {
-          handleChange("address_pincode", event.target.value);
+          handleChange("address_pincode", parseInt(event.target.value));
         }}
       />
     </div>

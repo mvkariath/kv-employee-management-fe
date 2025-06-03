@@ -20,22 +20,16 @@ import {
 } from "../../api-services/employees/employee.api";
 import type { Department } from "../../api-services/department/types";
 import { useGetDepartmentsQuery } from "../../api-services/department/department.api";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { QueryStatus } from "@reduxjs/toolkit/query";
 interface EmployeeFormProps {
   context: "create" | "edit";
-  // departmentOptions: { value: string; label: number }[];
 }
 export type selectBoxOption = {
   value: string | number;
   label: string;
 };
-// const departmentOptions: selectBoxOption[] = [
-//   { value: "UI", label: "UI" },
-//   { value: "UX", label: "UX" },
-//   { value: "DEV", label: "Developer" },
 
-//   { value: "HR", label: "HR" },
-// ];
 const statusOptions: selectBoxOption[] = [
   { value: "ACTIVE", label: "Active" },
   { value: "INACTIVE", label: "Inactive" },
@@ -62,10 +56,17 @@ export type UserForm = {
 const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
   // const dispatch = useAppDispatch
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const [addEmployee] = useCreateEmployeeMutation();
-  const [editEmployee] = useUpdateEmployeeMutation();
-  const { data: departmentList, error, isLoading } = useGetDepartmentsQuery();
+  const [
+    addEmployee,
+    { isLoading: isCreatingEmployee, status: createEmployeeStatus },
+  ] = useCreateEmployeeMutation();
+  const [
+    editEmployee,
+    { isLoading: isUpdatingEmployee, status: updateEmployeeStatus },
+  ] = useUpdateEmployeeMutation();
+  const { data: departmentList } = useGetDepartmentsQuery();
   const { data: employee } = useGetSingleEmployeeQuery(
     location.pathname.split("/").slice(-1)[0],
     {
@@ -106,8 +107,10 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
       [field]: value,
     }));
   }
-  function handleSubmit() {
-    const samplePayload: Employee = {
+  console.log("this is the staus of the request", updateEmployeeStatus);
+
+  async function handleSubmit() {
+    const samplePayload: Partial<Employee> = {
       name: userForm.name,
       employeeId: userForm.employeeId,
       dateOfJoining: userForm.dateOfJoining,
@@ -116,7 +119,7 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
       email: userForm.email,
       experience: userForm.experience,
       age: userForm.age,
-      department_id: parseInt(userForm.departmentId),
+      department_id: userForm.departmentId,
       password: userForm.password,
       address: {
         houseNo: userForm.address_houseNo,
@@ -126,10 +129,14 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
       },
     };
     if (context === "create") {
-      addEmployee(samplePayload);
+      await addEmployee(samplePayload as Employee);
     } else if (context === "edit") {
-      editEmployee({ user_id: employee?.id || "-1", employee: samplePayload });
+      await editEmployee({
+        user_id: employee?.id || "-1",
+        employee: samplePayload as Employee,
+      });
     }
+    navigate("/employee");
     console.log("this is hte payload", samplePayload);
   }
   useEffect(() => {
@@ -144,6 +151,7 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
         email: employee?.email || "",
         experience: employee?.experience || 0,
         age: employee?.age || 0,
+        //@ts-ignore
         departmentId: employee?.department.id || 1,
         password: "",
         address_line1: employee?.address.line1 || "",
@@ -170,6 +178,13 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
       });
     }
   }, [employee, location]);
+  useEffect(() => {
+    if (
+      updateEmployeeStatus === QueryStatus.fulfilled ||
+      createEmployeeStatus === QueryStatus.fulfilled
+    )
+      navigate(-1);
+  }, [updateEmployeeStatus, createEmployeeStatus]);
 
   return (
     <>
@@ -258,9 +273,11 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
             <button
               className="create-button"
               onClick={handleSubmit}
+              disabled={isUpdatingEmployee || isCreatingEmployee}
               type="button"
             >
               {context === "edit" ? "Save" : "Create"}
+              {isCreatingEmployee || isUpdatingEmployee ? "..." : ""}
             </button>
 
             <Button className="cancel-button" text="Cancel" />

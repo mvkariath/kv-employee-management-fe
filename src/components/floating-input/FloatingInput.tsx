@@ -45,6 +45,7 @@ const FloatingInput = ({
           placeholder={placeholder}
           onChange={onChange}
           value={value}
+          aria-label="Username"
         />
         <span>{placeholder}</span>
 

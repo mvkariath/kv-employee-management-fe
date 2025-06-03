@@ -1,5 +1,4 @@
 import type { selectBoxOption } from "../../pages/employee-list/EmployeeList";
-import type { Role, Status } from "../../store/employee/employee.types";
 import "./Select.css";
 
 const Select = ({
@@ -20,12 +19,15 @@ const Select = ({
       <label>{label}</label>
       <select
         value={value}
-        onChange={(event) =>
+        onChange={(event) => {
+          console.log("from the component", event.target.value);
           onChange(
             label === "Department" ? "departmentId" : "status",
-            event.target.value
-          )
-        }
+            label === "Department"
+              ? parseInt(event.target.value)
+              : event.target.value
+          );
+        }}
       >
         {selectOptions.length &&
           selectOptions.map((option) => {

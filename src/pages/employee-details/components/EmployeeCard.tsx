@@ -49,7 +49,7 @@ function EmployeeDetailField({
   return (
     <div className={`employee-details-field ${className}`}>
       <label>{label}</label>
-      <p>{value}</p>
+      <div>{value}</div>
     </div>
   );
 }
@@ -63,9 +63,10 @@ function formatValue({
   switch (key) {
     case "experience":
       return <p>{value as string} years</p>;
-    case "deleted_at":
+    case "deletedAt":
+      return "N/A";
     case "password":
-      return null;
+      return "****";
     case "status":
       return <StatusCell status={value as string} />;
     case "dateOfJoining":
@@ -85,41 +86,34 @@ function formatValue({
     case "department":
       return (value as Department).name;
     default:
-      return value;
+      return value as String;
   }
+}
+function GenerateUi(data: Employee) {
+  const cards = [];
+  for (let i = 0; i < 15; i += 5) {
+    cards.push(
+      <>
+        <div className="employee-card-line">
+          {Object.entries(data)
+            .slice(i, i + 5)
+            .map(([key, value]) => {
+              return (
+                <EmployeeDetailField
+                  label={key}
+                  value={formatValue({ key, value })}
+                />
+              );
+            })}
+        </div>
+        {i < 10 && <hr />}
+      </>
+    );
+  }
+
+  return <>{cards}</>;
 }
 
 export const EmployeeCard = ({ data }: { data: Employee }) => {
-  const address = data.address;
-  console.log(address);
-
-  return (
-    <div className="employee-card">
-      <div className="employee-card-line">
-        {(function () {
-          return (
-            <>
-              {Object.entries(data).map(([key, value]) => {
-                return (
-                  <EmployeeDetailField
-                    label={key}
-                    value={formatValue({ key, value })}
-                  />
-                );
-              })}
-            </>
-          );
-        })()}
-      </div>
-
-      <div className="employee-card-line">
-        {/* <EmployeeDetailField
-          className="employee-address"
-          label="Employee Addresss"
-          value={<></>}
-        /> */}
-        {/* <EmployeeDetailField label={"Employee Id"} value={"EMP123"} /> */}
-      </div>
-    </div>
-  );
+  return <div className="employee-card">{GenerateUi(data)}</div>;
 };

@@ -6,7 +6,6 @@ import { EmployeeTable } from "./components/EmployeeTable";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import type { Employee, Status } from "../../store/employee/employee.types";
 import { useGetEmployeesQuery } from "../../api-services/employees/employee.api";
-import { useGetDepartmentsQuery } from "../../api-services/department/department.api";
 
 export type selectBoxOption = {
   value: string | number;
@@ -31,7 +30,8 @@ const EmployeeList = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  function handleFilterChange(value: Status | "all") {
+  function handleFilterChange(field: string, value: Status | "all") {
+    console.log(value);
     if (value === "all") {
       setSearchParams(new URLSearchParams());
       return;
@@ -40,10 +40,10 @@ const EmployeeList = () => {
   }
 
   const status = searchParams.get("status");
-  console.log(status);
+  console.log("this sis thec current ", status);
 
   const handleEditClicked = () => {
-    navigate("/create");
+    navigate("/employee/create");
   };
   if (error) {
     return <p>An error has occured</p>;

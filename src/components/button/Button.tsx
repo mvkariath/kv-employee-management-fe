@@ -11,7 +11,7 @@ interface ButtonProps {
 const Button = ({
   text,
   className,
-  disabled = true,
+  disabled = false,
   onClick,
   icon,
 }: ButtonProps) => {

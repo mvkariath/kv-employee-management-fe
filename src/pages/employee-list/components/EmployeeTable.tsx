@@ -1,9 +1,7 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import Modal from "../../../components/modal/Modal";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import type { Employee } from "../../../store/employee/employee.types";
-import store, { useAppDispatch } from "../../../store/store";
-import { removeEmployee } from "../../../store/employee/employeeReducer";
 import { formatTimeStampToDate } from "../../../helpers/format-timestamp";
 import { useDeleteEmployeeMutation } from "../../../api-services/employees/employee.api";
 
@@ -80,19 +78,19 @@ export const EmployeeTable = ({ data }: { data: Employee[] }) => {
   if (!data || data.length === 0) {
     return <p>There are no employees to show </p>;
   }
-  const dispatch = useAppDispatch();
-  const [deleteUser, { isLoading }] = useDeleteEmployeeMutation();
+  const [deleteUser, { isLoading: isDeletingEmployee }] =
+    useDeleteEmployeeMutation();
 
   function handleRowClick(user_id: string) {
     console.log("row clicked", user_id);
     navigate(user_id.toString());
   }
-  function confirmDeleteUser(user: Employee) {
+  async function confirmDeleteUser(user: Employee) {
     console.log("Deletinngggg", user.employeeId);
 
     // dispatch(removeEmployee(user));
     console.log(user.employeeId);
-    deleteUser(user.id);
+    await deleteUser(user.id);
     setDeleteEmployee(null);
   }
   const [deleteEmployee, setDeleteEmployee] = useState<Employee | null>(null);
@@ -200,9 +198,10 @@ export const EmployeeTable = ({ data }: { data: Employee[] }) => {
                 </button>
                 <button
                   id="delete-button"
+                  disabled={isDeletingEmployee}
                   onClick={() => confirmDeleteUser(deleteEmployee)}
                 >
-                  Delete
+                  {isDeletingEmployee ? "Deleting .." : "Delete"}
                 </button>
               </div>
             </div>

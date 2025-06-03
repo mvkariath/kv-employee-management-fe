@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
 import Button from "../../components/button/Button";
-import Select from "../../components/select/Select";
 import { TitleHeader } from "../../components/title-header/TitleHeader";
 import "./EmployeeList.css";
+import { useNavigate } from "react-router-dom";
 import { EmployeeCard } from "./components/EmployeeCard";
-import type { UserDetails } from "../../types/employee.type";
 import { useGetSingleEmployeeQuery } from "../../api-services/employees/employee.api";
 
 export type selectBoxOption = {
@@ -13,24 +11,9 @@ export type selectBoxOption = {
 };
 
 const EmployeeDetails = () => {
-  const statusOptions: selectBoxOption[] = [
-    { value: "active", label: "Active" },
-    { value: "inactive", label: "Inactive" },
-    { value: "probation", label: "Probation" },
-  ];
-  //const [employee, setEmployee] = useState<UserDetails>();
-  const { data: employee } = useGetSingleEmployeeQuery(
-    location.pathname.split("/").slice(-1)[0]
-  );
-  console.log(employee);
-  // const [isLoading, setisLoading] = useState(false);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setisLoading(true);
-  //     setEmployee(dummyUser);
-  //   }, 2000);
-  // }, []);
+  const navigate = useNavigate();
+  const employee_id = location.pathname.split("/").slice(-1)[0];
+  const { data: employee } = useGetSingleEmployeeQuery(employee_id);
   if (!employee) return <>there are no employee to display</>;
   return (
     <>
@@ -41,7 +24,14 @@ const EmployeeDetails = () => {
             <Button
               text="Edit Employee"
               className="create-employee-button"
-              icon={<div className="plus-icon">E</div>}
+              icon={
+                <div className="plus-icon">
+                  <img src="/assets/edit.png" />
+                </div>
+              }
+              onClick={() => {
+                navigate(`/employee/edit/${employee_id}`);
+              }}
             />
           </div>
         }

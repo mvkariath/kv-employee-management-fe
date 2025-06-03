@@ -72,8 +72,10 @@ body {
 }
 .plus-icon {
   background: #03aeee;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
+  align-items: center;
+  display: flex;
   line-height: 30px;
   border-radius: 100%;
   color: white;

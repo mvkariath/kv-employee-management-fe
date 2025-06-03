@@ -5,7 +5,6 @@ import Input from "../floating-input/FloatingInput";
 import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../api-services/auth/login.api";
-import type { LoginPayload } from "../../api-services/auth/types";
 const LoginForm = () => {
   const [login, { isLoading }] = useLoginMutation();
   const [username, setUsername] = useState("");
@@ -17,14 +16,14 @@ const LoginForm = () => {
 
   const userNameCheck = (username: string) => {
     return {
-      isInvalid: username.length > 20,
-      limit: 10,
+      isInvalid: username.length > 30,
+      limit: 30,
     };
   };
   const passwordCheck = (username: string) => {
     return {
-      isInvalid: username.length > 15,
-      limit: 15,
+      isInvalid: username.length > 30,
+      limit: 30,
     };
   };
 
@@ -44,13 +43,14 @@ const LoginForm = () => {
         navigate("/employee");
       })
       .catch((error) => {
-        setCredentialsError(error.message);
+        console.log("this si terror of login ", error);
+        setCredentialsError(error.data.message);
       });
   }
 
   return (
     <form className="login-form">
-      <img src="/assets/kv-logo.png" height={45} width={208} />1
+      <img src="/assets/kv-logo.png" height={45} width={208} />
       <Input
         ref={usernameRef}
         placeholder="Email Id "
@@ -104,7 +104,7 @@ const LoginForm = () => {
       {}
       <Button
         className="login-button"
-        text={isLoading ? "loading" : "Login"}
+        text={isLoading ? "Loading.." : "Login"}
         disabled={isLoading}
         onClick={loginUser}
       />

@@ -89,9 +89,10 @@ body {
   color: rgb(36, 35, 35);
 }
 .plus-icon {
+  padding: 5px;
   background: #03aeee;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   line-height: 30px;
   border-radius: 100%;
   color: white;

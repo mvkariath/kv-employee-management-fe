@@ -40,7 +40,7 @@ const Sidebar = () => {
       {navItems.map((navItem) => {
         return (
           <nav>
-            <a
+            <div
               className={`nav-item ${
                 isLinkActive(navItem.link) ? "" : "inactive"
               }`}
@@ -56,12 +56,12 @@ const Sidebar = () => {
               >
                 {navItem.label}
               </Link>
-            </a>
+            </div>
           </nav>
         );
       })}
 
-      <button onClick={handleLogout} className="login-button logout-button">
+      <button onClick={handleLogout} className="logout-button">
         {/* <img src="/assets/logout.svg" height={70} width={70} /> */}
         Logout
       </button>

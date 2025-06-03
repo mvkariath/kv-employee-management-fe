@@ -1,9 +1,8 @@
-.login-button{
-   
-    background-color:#03AEEE;
-    border:none;
-    color: white;
-    border-radius: 5px;
-    padding: 10px;
-    height: fit-content;
+.login-button {
+  background-color: #03aeee;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  height: fit-content;
 }
