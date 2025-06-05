@@ -12,30 +12,7 @@ body {
   flex-direction: row;
   height: 35px;
 }
-.table-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 5px 5px 5px rgba(56, 58, 58, 0.151);
-  background: #ffffff;
-}
 
-.header-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border-radius: 10px;
-  padding: 15px;
-  font-weight: bold;
-  background: #eaf9ff;
-}
-.table-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 .status-badge {
   text-align: center;
   padding: 1px;
@@ -46,17 +23,12 @@ body {
   border-radius: 20px;
   font-weight: normal;
 }
-.table-cell {
-  width: 13%;
-}
+
 .action-button-group {
   display: flex;
   gap: 20px;
 }
-.action-button-group button {
-  border: none;
-  background: transparent;
-}
+
 .create-employee-button {
   display: flex;
 }

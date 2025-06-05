@@ -1,16 +1,11 @@
-import { useEffect } from "react";
 import LoginForm from "../../components/login-form/LoginForm";
 import "./Login.css";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      console.log("navigating");
-      navigate("/employee");
-    }
-  }, []);
+  if (localStorage.getItem("token")) {
+    return <Navigate to="/employee" />;
+  }
 
   return (
     <div className="main-container">

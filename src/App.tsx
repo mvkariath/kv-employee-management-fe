@@ -77,11 +77,11 @@ function App() {
           element: <EmployeeDetails />,
         },
       ],
-      // errorElement: (
-      //   <Suspense fallback={<LoadingPage />}>
-      //     <NotFound />
-      //   </Suspense>
-      // ),
+      errorElement: (
+        <Suspense fallback={<LoadingPage />}>
+          <NotFound />
+        </Suspense>
+      ),
     },
     {
       path: "*",

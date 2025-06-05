@@ -1,6 +1,5 @@
 import "./Modal.css";
 interface ModalProps {
-  //setisModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onClose: () => void;
   modalContent: React.ReactNode;
   modalHeader: string;

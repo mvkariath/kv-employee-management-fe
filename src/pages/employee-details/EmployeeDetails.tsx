@@ -1,8 +1,8 @@
 import Button from "../../components/button/Button";
 import { TitleHeader } from "../../components/title-header/TitleHeader";
-import "./EmployeeList.css";
+import "./EmployeeDetails.css";
 import { useNavigate } from "react-router-dom";
-import { EmployeeCard } from "./components/EmployeeCard";
+import { EmployeeCard } from "../../components/employee-card/EmployeeCard";
 import { useGetSingleEmployeeQuery } from "../../api-services/employees/employee.api";
 
 export type selectBoxOption = {

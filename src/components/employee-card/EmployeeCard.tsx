@@ -1,8 +1,8 @@
 import type React from "react";
 import "./EmployeeCard.css";
-import { formatTimeStampToDate } from "../../../helpers/format-timestamp";
-import type { Address, Employee } from "../../../store/employee/employee.types";
-import type { Department } from "../../../api-services/department/types";
+import { formatTimeStampToDate } from "../../helpers/format-timestamp";
+import type { Address, Employee } from "../../store/employee/employee.types";
+import type { Department } from "../../api-services/department/types";
 
 function StatusCell({ status }: { status: string }) {
   let textColor;
