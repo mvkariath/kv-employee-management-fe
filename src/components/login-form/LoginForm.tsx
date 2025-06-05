@@ -10,6 +10,8 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
+  const [inputValidationError, setInputValidationError] =
+    useState<boolean>(false);
   const [credentialsError, setCredentialsError] = useState(false);
   const navigate = useNavigate();
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -53,6 +55,7 @@ const LoginForm = () => {
       <img src="/assets/kv-logo.png" height={45} width={208} />
       <Input
         ref={usernameRef}
+        setInputValidationError={setInputValidationError}
         placeholder="Email Id "
         type="email"
         value={username}
@@ -103,9 +106,11 @@ const LoginForm = () => {
       </div>
       {}
       <Button
-        className="login-button"
+        className={`login-button ${
+          isLoading || inputValidationError ? "disabled" : ""
+        }`}
         text={isLoading ? "Loading.." : "Login"}
-        disabled={isLoading}
+        disabled={isLoading || inputValidationError}
         onClick={loginUser}
       />
       {credentialsError && (
