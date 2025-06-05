@@ -4,6 +4,7 @@ import "./Sidebar.css";
 interface NavItems {
   label: string;
   link: string;
+  icon: string;
 }
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -25,14 +26,16 @@ const Sidebar = () => {
     {
       label: "Employee List",
       link: "",
+      icon: "icon",
     },
-    {
-      label: "Create Employee",
-      link: "create",
-    },
+    // {
+    //   label: "Create Employee",
+    //   link: "create",
+    // },
     {
       label: "My Profile",
       link: "profile",
+      icon: "user",
     },
   ];
 
@@ -50,7 +53,7 @@ const Sidebar = () => {
               }`}
             >
               <div className="nav-item-icon">
-                <img alt="users icon" src="/assets/icon.svg" />
+                <img alt="users icon" src={`/assets/${navItem.icon}.svg`} />
               </div>
               <Link
                 to={navItem.link}
