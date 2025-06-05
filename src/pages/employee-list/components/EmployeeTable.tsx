@@ -192,7 +192,9 @@ export const EmployeeTable = ({ data }: { data: Employee[] }) => {
               <div className="button-group">
                 <button
                   id="cancel-button"
-                  onClick={() => setDeleteEmployee(null)}
+                  onClick={() => {
+                    setDeleteEmployee(null);
+                  }}
                 >
                   Cancel
                 </button>

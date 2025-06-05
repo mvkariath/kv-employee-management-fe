@@ -36,7 +36,17 @@ function StatusCell({ status }: { status: string }) {
     </div>
   );
 }
-
+function formatLabel(label: string) {
+  let formatted_string = "";
+  for (let i = 0; i < label.length; i++) {
+    if (/[A-Z]/.test(label[i])) {
+      formatted_string += " ";
+    }
+    formatted_string += label[i];
+    console.log(label[i]);
+  }
+  return formatted_string;
+}
 function EmployeeDetailField({
   label,
   value,
@@ -48,7 +58,7 @@ function EmployeeDetailField({
 }) {
   return (
     <div className={`employee-details-field ${className}`}>
-      <label>{label}</label>
+      <label>{formatLabel(label)}</label>
       <div>{value}</div>
     </div>
   );

@@ -291,7 +291,11 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
               {isCreatingEmployee || isUpdatingEmployee ? "..." : ""}
             </button>
 
-            <Button className="cancel-button" text="Cancel" />
+            <Button
+              className="cancel-button"
+              text="Cancel"
+              onClick={() => navigate(-1)}
+            />
           </div>
         </form>
       </section>

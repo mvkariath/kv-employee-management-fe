@@ -1,6 +1,6 @@
-.topbar{
-    height: 8%;
-    width: 100%;
-    background:white;
-    z-index: 5;
+.topbar {
+  height: 8%;
+  width: 100%;
+  background: rgba(78, 76, 76, 0.068);
+  z-index: 5;
 }

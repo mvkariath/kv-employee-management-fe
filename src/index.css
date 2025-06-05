@@ -6,5 +6,8 @@
   box-sizing: border-box;
 }
 button {
-  cursor: grab;
+  cursor: pointer;
+}
+.disabled {
+  opacity: 0.2;
 }

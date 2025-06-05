@@ -83,3 +83,16 @@ body {
   text-align: center;
   justify-content: center;
 }
+.profile-image-container {
+  background-color: rgba(65, 105, 225, 0.11);
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.profile-image-container img {
+  height: 150px;
+  width: 150px;
+  border-radius: 100%;
+}
