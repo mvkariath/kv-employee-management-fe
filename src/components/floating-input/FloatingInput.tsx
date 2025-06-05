@@ -51,11 +51,10 @@ const FloatingInput = ({
 
         {endAdonment && endAdonment}
       </label>
-      {inputError && (
-        <p className="input-error">
-          The {placeholder} has exceeded {inputErrorMessage} charas
-        </p>
-      )}
+
+      <p className={`input-error ${!inputError ? "input-error-hidden" : ""}`}>
+        The {placeholder} has exceeded {inputErrorMessage} charas
+      </p>
     </>
   );
 };

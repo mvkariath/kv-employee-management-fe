@@ -10,7 +10,7 @@ export type selectBoxOption = {
   label: string;
 };
 
-const EmployeeDetails = () => {
+const EmployeeProfile = () => {
   const navigate = useNavigate();
   const employee_id = location.pathname.split("/").slice(-1)[0];
   const { data: employee } = useGetSingleEmployeeQuery(employee_id);
@@ -42,4 +42,4 @@ const EmployeeDetails = () => {
   );
 };
 
-export default EmployeeDetails;
+export default EmployeeProfile;

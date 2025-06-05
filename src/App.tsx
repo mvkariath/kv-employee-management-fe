@@ -13,6 +13,9 @@ const EmployeeList = lazy(() => import("./pages/employee-list/EmployeeList"));
 const EmployeeDetails = lazy(
   () => import("./pages/employee-details/EmployeeDetails")
 );
+const EmployeeProfile = lazy(
+  () => import("./pages/user-profile/EmployeeProfile")
+);
 const EmployeeForm = lazy(() => import("./pages/employee-form/EmployeeForm"));
 // import { EmployeeTable } from "./pages/employee-list/components/EmployeeTable";
 
@@ -53,6 +56,14 @@ function App() {
           ),
         },
         {
+          path: "profile",
+          element: (
+            <Suspense fallback={<LoadingPage />}>
+              <EmployeeProfile />
+            </Suspense>
+          ),
+        },
+        {
           path: "edit/:id",
           element: (
             <Suspense fallback={<LoadingPage />}>
@@ -60,6 +71,7 @@ function App() {
             </Suspense>
           ),
         },
+
         {
           path: ":id",
           element: <EmployeeDetails />,

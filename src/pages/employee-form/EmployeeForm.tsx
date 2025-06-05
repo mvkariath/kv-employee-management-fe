@@ -35,6 +35,11 @@ const statusOptions: selectBoxOption[] = [
   { value: "INACTIVE", label: "Inactive" },
   { value: "PROBATION", label: "Probation" },
 ];
+const roleOptions: selectBoxOption[] = [
+  { value: "UI", label: "UI" },
+  { value: "UX", label: "UX" },
+  { value: "HR", label: "HR" },
+];
 
 export type UserForm = {
   name: string;
@@ -183,7 +188,7 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
       updateEmployeeStatus === QueryStatus.fulfilled ||
       createEmployeeStatus === QueryStatus.fulfilled
     )
-      navigate(-1);
+      navigate("/employee");
   }, [updateEmployeeStatus, createEmployeeStatus]);
 
   return (
@@ -247,6 +252,12 @@ const EmployeeForm = ({ context = "create" }: EmployeeFormProps) => {
                 }}
               />
             )}
+            <Select
+              label="Role"
+              selectOptions={roleOptions}
+              value={userForm.role}
+              onChange={handleChange}
+            />
             <Select
               label="Department"
               selectOptions={departmentOptions || [{ label: "HR", value: 1 }]} // this is afall back that is added in case there are no options

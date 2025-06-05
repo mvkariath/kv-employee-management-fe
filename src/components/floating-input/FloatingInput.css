@@ -1,6 +1,6 @@
 #floating-input {
   display: flex;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
   position: relative;
   padding: 10px;
   border-radius: 5px;
@@ -13,9 +13,14 @@ input {
   outline: none;
 }
 .input-error {
+  visibility: visible;
   color: red;
-  text-align: center;
+  text-align: left;
 }
+.input-error-hidden {
+  visibility: hidden;
+}
+
 #floating-input input::placeholder {
   opacity: 0;
 }

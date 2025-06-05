@@ -30,6 +30,10 @@ const Sidebar = () => {
       label: "Create Employee",
       link: "create",
     },
+    {
+      label: "My Profile",
+      link: "profile",
+    },
   ];
 
   return (

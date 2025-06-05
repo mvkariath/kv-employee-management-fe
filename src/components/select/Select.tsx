@@ -22,7 +22,11 @@ const Select = ({
         onChange={(event) => {
           console.log("from the component", event.target.value);
           onChange(
-            label === "Department" ? "departmentId" : "status",
+            label === "Department"
+              ? "departmentId"
+              : label === "Role"
+              ? "role"
+              : "status",
             label === "Department"
               ? parseInt(event.target.value)
               : event.target.value

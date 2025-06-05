@@ -75,14 +75,11 @@ const EmployeeList = () => {
               className="filter-by-select"
             />
             <Button
+              key="create-employee"
               text="Create Employee"
               className="create-employee-button"
               onClick={handleEditClicked}
-              icon={
-                <Link to="create" className="plus-icon">
-                  +
-                </Link>
-              }
+              icon={<div className="plus-icon">+</div>}
             />
           </div>
         }

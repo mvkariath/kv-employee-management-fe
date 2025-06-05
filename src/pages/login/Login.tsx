@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("isLoggedIn") === "true") {
+    if (localStorage.getItem("token")) {
       console.log("navigating");
       navigate("/employee");
     }

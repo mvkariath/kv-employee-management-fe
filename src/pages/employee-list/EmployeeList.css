@@ -18,8 +18,12 @@ body {
   justify-content: space-between;
   border-radius: 10px;
   padding: 15px;
+  transition-duration: 300ms;
   box-shadow: 5px 5px 5px rgba(56, 58, 58, 0.151);
   background: #ffffff;
+}
+.table-row:hover {
+  background: #55545421;
 }
 .header-row {
   display: flex;
@@ -72,8 +76,11 @@ body {
 }
 .action-button-group button {
   border: none;
-  background: transparent;
+  padding: 5px;
+  background: rgba(128, 128, 128, 0.096);
+  border-radius: 100%;
 }
+
 .create-employee-button {
   display: flex;
 }
@@ -89,10 +96,11 @@ body {
   color: rgb(36, 35, 35);
 }
 .plus-icon {
-  padding: 5px;
   background: #03aeee;
-  width: 20px;
-  height: 20px;
+  width: 35px;
+  height: 35px;
+  align-items: center;
+  display: flex;
   line-height: 30px;
   border-radius: 100%;
   color: white;

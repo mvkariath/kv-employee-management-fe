@@ -16,14 +16,14 @@ const LoginForm = () => {
 
   const userNameCheck = (username: string) => {
     return {
-      isInvalid: username.length > 30,
-      limit: 30,
+      isInvalid: username.length > 20,
+      limit: 20,
     };
   };
   const passwordCheck = (username: string) => {
     return {
-      isInvalid: username.length > 30,
-      limit: 30,
+      isInvalid: username.length > 20,
+      limit: 20,
     };
   };
 

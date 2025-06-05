@@ -4,6 +4,8 @@
 }
 
 .main-container {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
   display: flex;
   flex-direction: row;
   margin: 20px;
