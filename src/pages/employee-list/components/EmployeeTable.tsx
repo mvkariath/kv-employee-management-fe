@@ -4,43 +4,6 @@ import { useNavigate, type NavigateFunction } from "react-router-dom";
 import type { Employee } from "../../../store/employee/employee.types";
 import { formatTimeStampToDate } from "../../../helpers/format-timestamp";
 import { useDeleteEmployeeMutation } from "../../../api-services/employees/employee.api";
-
-function TableCells({ children }: { children: React.ReactNode }) {
-  return <div className="table-cell">{children}</div>;
-}
-interface ActionButtonGroupProps {
-  user: Employee;
-  navigator: NavigateFunction;
-  setUser: React.Dispatch<React.SetStateAction<Employee | null>>;
-}
-function ActionButtonGroup({
-  user,
-  navigator,
-  setUser,
-}: ActionButtonGroupProps) {
-  const handleDeleteClick = (user: Employee, event: React.MouseEvent) => {
-    event.stopPropagation();
-    setUser(user);
-    // setisModalOpen(true);
-  };
-  const handleEditClicked = (user: Employee, event: React.MouseEvent) => {
-    event.stopPropagation();
-    navigator(`edit/${user.id}`);
-  };
-
-  return (
-    <>
-      <div className="action-button-group">
-        <button onClick={(event) => handleDeleteClick(user, event)}>
-          <img src="/assets/bin.svg" />
-        </button>
-        <button onClick={(event) => handleEditClicked(user, event)}>
-          <img src="/assets/edit.svg" />
-        </button>
-      </div>
-    </>
-  );
-}
 function StatusCell({ status }: { status: string }) {
   let textColor;
   let backgroundColor;
@@ -73,6 +36,41 @@ function StatusCell({ status }: { status: string }) {
     </div>
   );
 }
+function TableCells({ children }: { children: React.ReactNode }) {
+  return <div className="table-cell">{children}</div>;
+}
+interface ActionButtonGroupProps {
+  user: Employee;
+  navigator: NavigateFunction;
+  setUser: React.Dispatch<React.SetStateAction<Employee | null>>;
+}
+function ActionButtonGroup({
+  user,
+  navigator,
+  setUser,
+}: ActionButtonGroupProps) {
+  const handleDeleteClick = (user: Employee, event: React.MouseEvent) => {
+    event.stopPropagation();
+    setUser(user);
+  };
+  const handleEditClicked = (user: Employee, event: React.MouseEvent) => {
+    event.stopPropagation();
+    navigator(`edit/${user.id}`);
+  };
+
+  return (
+    <>
+      <div className="action-button-group">
+        <button onClick={(event) => handleDeleteClick(user, event)}>
+          <img src="/assets/bin.svg" />
+        </button>
+        <button onClick={(event) => handleEditClicked(user, event)}>
+          <img src="/assets/edit.svg" />
+        </button>
+      </div>
+    </>
+  );
+}
 
 export const EmployeeTable = ({ data }: { data: Employee[] }) => {
   if (!data || data.length === 0) {
@@ -86,9 +84,6 @@ export const EmployeeTable = ({ data }: { data: Employee[] }) => {
     navigate(user_id.toString());
   }
   async function confirmDeleteUser(user: Employee) {
-    console.log("Deletinngggg", user.employeeId);
-
-    // dispatch(removeEmployee(user));
     console.log(user.employeeId);
     await deleteUser(user.id);
     setDeleteEmployee(null);

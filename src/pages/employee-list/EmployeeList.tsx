@@ -3,7 +3,7 @@ import Select from "../../components/select/Select";
 import { TitleHeader } from "../../components/title-header/TitleHeader";
 import "./EmployeeList.css";
 import { EmployeeTable } from "./components/EmployeeTable";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import type { Employee, Status } from "../../store/employee/employee.types";
 import { useGetEmployeesQuery } from "../../api-services/employees/employee.api";
 
@@ -11,27 +11,21 @@ export type selectBoxOption = {
   value: string | number;
   label: string;
 };
-
+const statusOptions: selectBoxOption[] = [
+  {
+    value: "all",
+    label: "All",
+  },
+  { value: "active", label: "Active" },
+  { value: "inactive", label: "Inactive" },
+  { value: "probation", label: "Probation" },
+];
 const EmployeeList = () => {
-  const statusOptions: selectBoxOption[] = [
-    {
-      value: "all",
-      label: "All",
-    },
-    { value: "active", label: "Active" },
-    { value: "inactive", label: "Inactive" },
-    { value: "probation", label: "Probation" },
-  ];
-
   const { data: employeeList, error, isLoading } = useGetEmployeesQuery();
-
-  console.log("employeeList");
-
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handleFilterChange(field: string, value: Status | "all") {
-    console.log(value);
     if (value === "all") {
       setSearchParams(new URLSearchParams());
       return;
@@ -40,11 +34,11 @@ const EmployeeList = () => {
   }
 
   const status = searchParams.get("status");
-  console.log("this sis thec current ", status);
 
   const handleEditClicked = () => {
     navigate("/employee/create");
   };
+
   if (error) {
     return <p>An error has occured</p>;
   }
