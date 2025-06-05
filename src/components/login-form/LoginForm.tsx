@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "../button/Button";
 import Input from "../floating-input/FloatingInput";
-
-import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../api-services/auth/login.api";
+
 const LoginForm = () => {
   const [login, { isLoading }] = useLoginMutation();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
+
   const [inputValidationError, setInputValidationError] =
     useState<boolean>(false);
   const [credentialsError, setCredentialsError] = useState(false);
+
   const navigate = useNavigate();
   const usernameRef = useRef<HTMLInputElement>(null);
 
@@ -38,6 +40,7 @@ const LoginForm = () => {
   }, [showPass]);
 
   async function loginUser() {
+    console.log(username, password);
     login({ email: username, password: password })
       .unwrap()
       .then((response) => {
@@ -110,7 +113,7 @@ const LoginForm = () => {
           isLoading || inputValidationError ? "disabled" : ""
         }`}
         text={isLoading ? "Loading.." : "Login"}
-        disabled={isLoading || inputValidationError}
+        disabled={isLoading}
         onClick={loginUser}
       />
       {credentialsError && (
